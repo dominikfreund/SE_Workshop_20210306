@@ -105,7 +105,7 @@ public class  CustomerTest {
     }
 
     private Rental getRental(String title, int priceCode, int daysRented) {
-        Movie movie = new Movie(title, priceCode);
+        Movie movie = Movie.create(title, priceCode);
         return new Rental(movie, daysRented);
     }
 }

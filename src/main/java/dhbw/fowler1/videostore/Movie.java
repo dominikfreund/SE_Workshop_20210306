@@ -1,6 +1,6 @@
 package dhbw.fowler1.videostore;
 
-public class Movie {
+public abstract class Movie {
     public static final int CHILDRENS = 2;
     public static final int REGULAR = 0;
     public static final int NEW_RELEASE = 1;
@@ -13,28 +13,30 @@ public class Movie {
         _priceCode = priceCode;
     }
 
-    double getCharge(int daysRented){
-        double result = 0;
-        switch (getPriceCode()) {
-            case Movie.REGULAR:
-                result += 2;
-                if (daysRented > 2)
-                    result += (daysRented - 2) * 1.5;
-                break;
-            case Movie.NEW_RELEASE:
-                result += daysRented * 3;
-                break;
-            case Movie.CHILDRENS:
-                result += 1.5;
-                if (daysRented > 3)
-                    result += (daysRented - 3) * 1.5;
-                break;
-        }
-        return result;
-    }
+    abstract double getCharge(int daysRented);
 
-    int getFrequentRenterCode(int daysRented){
-        if(getPriceCode() == Movie.NEW_RELEASE && daysRented > 1){
+//    double getCharge(int daysRented){
+//        double result = 0;
+//        switch (getPriceCode()) {
+//            case Movie.REGULAR:
+//                result += 2;
+//                if (daysRented > 2)
+//                    result += (daysRented - 2) * 1.5;
+//                break;
+//            case Movie.NEW_RELEASE:
+//                result += daysRented * 3;
+//                break;
+//            case Movie.CHILDRENS:
+//                result += 1.5;
+//                if (daysRented > 3)
+//                    result += (daysRented - 3) * 1.5;
+//                break;
+//        }
+//        return result;
+//    }
+
+    int getFrequentRenterCode(int daysRented) {
+        if (getPriceCode() == Movie.NEW_RELEASE && daysRented > 1) {
             return 2;
         } else {
             return 1;
@@ -53,4 +55,20 @@ public class Movie {
     public String getTitle() {
         return _title;
     }
+
+    public static Movie create(String title, int priceCode) {
+        switch (priceCode) {
+            case CHILDRENS:
+                return new ChildrensMovie(title, priceCode);
+
+
+            case NEW_RELEASE:
+                return new NewReleaseMovie(title, priceCode);
+
+
+            default:
+                return new RegularMovie(title, priceCode);
+        }
+    }
+
 }
