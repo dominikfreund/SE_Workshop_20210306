@@ -22,7 +22,15 @@ public class  CustomerTest {
                 "\tKiller Klowns from Outer Space\t2.0\n" +
                 "Amount owed is 2.0\n"+
                 "You earned 1 frequent renter points";
+
         assertEquals(expected, customer.statement());
+
+        String expected2 = "<H1>Rentals for <EM>Arthur Dent</EM></H1><P>\n"+
+                "Killer Klowns from Outer Space: 2.0<BR>\n"+
+                "<P>You owe <EM>2.0</EM><P>\n"+
+                "On this rental you earned <EM>1</EM> frequent renter points<P>";
+
+        assertEquals(expected2, customer.htmlStatement());
     }
 
     @Test
